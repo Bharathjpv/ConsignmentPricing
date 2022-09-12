@@ -1,0 +1,1 @@
+from ConsignmentProject.config.configuration import ConfigurationManager
