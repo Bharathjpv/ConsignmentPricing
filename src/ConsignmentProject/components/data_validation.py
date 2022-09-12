@@ -1,4 +1,4 @@
-from ConsignmentProject.entity import DataValidationConfig, DataValidationArtifact, DataPreTransformationArtifact
+from ConsignmentProject.entity import DataValidationConfig, DataValidationArtifact, DataCleaningArtifact
 from ConsignmentProject.utils import read_yaml
 
 
@@ -7,13 +7,13 @@ import collections
 
 class DataValidation:
 
-    def __init__(self, data_validation_config: DataValidationConfig, data_pre_transformation_artifact: DataPreTransformationArtifact):
+    def __init__(self, data_validation_config: DataValidationConfig, data_cleaned_artifact: DataCleaningArtifact):
 
         self.data_validation_config = data_validation_config
-        self.data_pre_transformation_artifact = data_pre_transformation_artifact
+        self.data_cleaned_artifact = data_cleaned_artifact
 
     def get_df(self):
-        df = pd.read_csv(self.data_pre_transformation_artifact.pre_transformed_data_file_path)
+        df = pd.read_csv(self.data_cleaned_artifact.cleaned_data_file_path)
 
         return df
 
@@ -21,12 +21,12 @@ class DataValidation:
         
         is_data_exists = False
 
-        data_file_path = self.data_pre_transformation_artifact.pre_transformed_data_file_path
+        data_file_path = self.data_cleaned_artifact.cleaned_data_file_path
 
         is_available = os.path.exists(data_file_path)
 
         if not is_available:
-            data_file_path = self.data_pre_transformation_artifact.pre_transformed_data_file_path
+            data_file_path = self.data_cleaned_artifact.cleaned_data_file_path
 
             message = "data file is not present"
         return is_available

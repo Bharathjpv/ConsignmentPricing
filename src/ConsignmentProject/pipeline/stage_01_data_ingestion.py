@@ -1,4 +1,4 @@
-from ConsignmentProject.components import DataIngestion, DataPreTransformation, DataValidation
+from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning
 from ConsignmentProject.config import ConfigurationManager
 
 
@@ -10,17 +10,17 @@ def main():
     dataIngestionArtifact = dataingestion.initiate_data_ingestion()
     
     ####################################################################
-    data_pretransformation_config = configMain.get_data_pretranformation_config()
+    data_cleaning_config = configMain.get_data_cleaning_config()
     
-    dataPreTransformation = DataPreTransformation(dataIngestionArtifact, data_pretransformation_config)
+    data_cleaning = DataCleaning(dataIngestionArtifact, data_cleaning_config)
 
-    dataPreTransformationArtifact = dataPreTransformation.initiate_data_pretranformation()
+    dataCleaningArtifact = data_cleaning.initiate_data_cleaning()
 
     ##################################################
 
     data_validation_config = configMain.get_data_validation_config()
 
-    dataValidation = DataValidation(data_validation_config=data_validation_config, data_pre_transformation_artifact = dataPreTransformationArtifact)
+    dataValidation = DataValidation(data_validation_config=data_validation_config, data_cleaned_artifact = dataCleaningArtifact)
 
     datavalidationartifact = dataValidation.initiate_data_validation()
     print(datavalidationartifact)

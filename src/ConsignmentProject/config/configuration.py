@@ -1,5 +1,5 @@
 from ConsignmentProject.constants import *
-from ConsignmentProject.entity import DataIngestionConfig, DataPreTransformationConfig, DataValidationConfig, TrainingPipelineConfig
+from ConsignmentProject.entity import DataIngestionConfig, DataCleaningConfig, DataValidationConfig, TrainingPipelineConfig
 from ConsignmentProject.utils import read_yaml, create_directories
 from ConsignmentProject import logger
 import os
@@ -26,20 +26,18 @@ class ConfigurationManager:
         )
         return data_ingestion_config
     
-    def get_data_pretranformation_config(self) ->DataPreTransformationConfig:
-        config = self.config.data_pre_transformation_config
+    def get_data_cleaning_config(self) ->DataCleaningConfig:
+        config = self.config.data_cleaning_config
 
         artifact_dir = self.training_pipeline_config.artifact_dir
 
-        pre_transformed_file_dir = os.path.join(artifact_dir,config.pre_transformed_file_dir)
-
-        pre_transformed_file_dir
+        cleaned_file_dir = os.path.join(artifact_dir,config.cleaned_file_dir)
         
-        data_pretransforamtion_config= DataPreTransformationConfig(
-            pre_transformed_file_dir=pre_transformed_file_dir
+        data_cleaning_config= DataCleaningConfig(
+            cleaned_file_dir=cleaned_file_dir
         )
 
-        return data_pretransforamtion_config
+        return data_cleaning_config
     
     def get_data_validation_config(self) -> DataValidationConfig:
         config = self.config.data_validation_config

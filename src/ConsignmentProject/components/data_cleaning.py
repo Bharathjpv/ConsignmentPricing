@@ -1,18 +1,18 @@
-from ConsignmentProject.entity import DataIngestionArtifact, DataPreTransformationArtifact
-from ConsignmentProject.entity import DataPreTransformationConfig
+from ConsignmentProject.entity import DataIngestionArtifact, DataCleaningArtifact
+from ConsignmentProject.entity import DataCleaningConfig
 from ConsignmentProject.constants import *
 
 import pandas as pd
 import numpy as np
 import os
 
-class DataPreTransformation:
-    def __init__(self, data_ingestion_artifact:DataIngestionArtifact, data_pre_transformation_config: DataPreTransformationConfig):
+class DataCleaning:
+    def __init__(self, data_ingestion_artifact:DataIngestionArtifact, data_cleaning_config: DataCleaningConfig):
 
         self.data_ingestion_artifact = data_ingestion_artifact
-        self.data_pre_transformation_config = data_pre_transformation_config
+        self.data_cleaning_config = data_cleaning_config
 
-    def transformData(self) -> DataPreTransformationArtifact:
+    def transformData(self) -> DataCleaningArtifact:
         
         df = pd.read_csv(self.data_ingestion_artifact.data_file_path)
 
@@ -125,26 +125,26 @@ class DataPreTransformation:
         return df
 
 
-    def save_pretransformed_data(self):
+    def save_cleaned_data(self):
         data = self.transformData()
 
-        pre_transformed_file_path = self.data_pre_transformation_config.pre_transformed_file_dir
+        cleaned_file_path = self.data_cleaning_config.cleaned_file_dir
 
-        pre_transformed_data_path = os.path.join(pre_transformed_file_path, PRE_TRANSFORMED_FILE_NAME)
+        cleaned_data_path = os.path.join(cleaned_file_path, CLEANED_FILE_NAME)
 
-        os.makedirs(pre_transformed_file_path, exist_ok=True)
+        os.makedirs(cleaned_file_path, exist_ok=True)
 
-        data.to_csv(pre_transformed_data_path, index=None, header=True)
+        data.to_csv(cleaned_data_path, index=None, header=True)
 
-        return pre_transformed_data_path
+        return cleaned_data_path
 
-    def initiate_data_pretranformation(self):
+    def initiate_data_cleaning(self):
 
-        data_pretransforamtion_artifact = DataPreTransformationArtifact(
-            pre_transformed_data_file_path=self.save_pretransformed_data()
+        data_cleaning_artifact = DataCleaningArtifact(
+            cleaned_data_file_path=self.save_cleaned_data()
         )
 
-        return data_pretransforamtion_artifact
+        return data_cleaning_artifact
 
         
 
