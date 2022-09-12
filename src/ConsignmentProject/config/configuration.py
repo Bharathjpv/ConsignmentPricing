@@ -1,5 +1,5 @@
 from ConsignmentProject.constants import *
-from ConsignmentProject.entity import DataIngestionConfig, DataPreTransformationConfig, TrainingPipelineConfig
+from ConsignmentProject.entity import DataIngestionConfig, DataPreTransformationConfig, DataValidationConfig, TrainingPipelineConfig
 from ConsignmentProject.utils import read_yaml, create_directories
 from ConsignmentProject import logger
 import os
@@ -40,6 +40,23 @@ class ConfigurationManager:
         )
 
         return data_pretransforamtion_config
+    
+    def get_data_validation_config(self) -> DataValidationConfig:
+        config = self.config.data_validation_config
+        artifact_dir = self.training_pipeline_config.artifact_dir
+
+        data_validation_artifact_dir = os.path.join(
+            artifact_dir,
+            config.schema_dir
+        )
+
+        schema_file_path = SCHEMA_FILE_PATH
+
+        data_validation_config = DataValidationConfig(
+            schema_file_path= schema_file_path
+        )
+
+        return data_validation_config
 
     def get_training_pipeline_config(self) -> TrainingPipelineConfig:
         config = self.config.training_pipeline_config

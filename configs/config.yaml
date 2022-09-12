@@ -8,3 +8,6 @@ data_ingestion_config:
 data_pre_transformation_config:
   pre_transformed_file_dir: data_pre_tranformation
 
+data_validation_config:
+  schema_dir: configs
+  schema_file_name: schema.yaml

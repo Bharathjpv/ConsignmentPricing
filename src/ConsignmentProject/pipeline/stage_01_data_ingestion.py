@@ -1,4 +1,4 @@
-from ConsignmentProject.components import DataIngestion, DataPreTransformation
+from ConsignmentProject.components import DataIngestion, DataPreTransformation, DataValidation
 from ConsignmentProject.config import ConfigurationManager
 
 
@@ -15,6 +15,15 @@ def main():
     dataPreTransformation = DataPreTransformation(dataIngestionArtifact, data_pretransformation_config)
 
     dataPreTransformationArtifact = dataPreTransformation.initiate_data_pretranformation()
+
+    ##################################################
+
+    data_validation_config = configMain.get_data_validation_config()
+
+    dataValidation = DataValidation(data_validation_config=data_validation_config, data_pre_transformation_artifact = dataPreTransformationArtifact)
+
+    datavalidationartifact = dataValidation.initiate_data_validation()
+    print(datavalidationartifact)
     
 
 if __name__=="__main__":

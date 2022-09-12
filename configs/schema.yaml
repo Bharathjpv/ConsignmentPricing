@@ -1,0 +1,44 @@
+columns:
+  PQ: category
+  PO / SO: category
+  ASN/DN: category
+  Country: category
+  Fulfill Via: category
+  Vendor INCO Term: category
+  Shipment Mode: category
+  Sub Classification: category
+  Manufacturing Site: category
+  First Line Designation: category
+  Unit of Measure (Per Pack): int
+  Line Item Quantity: int
+  Line Item Value: float
+  Pack Price: float
+  Unit Price: float
+  Freight Cost (USD): float
+  Line Item Insurance (USD): float
+  days to Process: float
+
+numerical_columns:
+  - Unit of Measure (Per Pack)
+  - Line Item Quantity
+  - Line Item Value
+  - Pack Price
+  - Unit Price
+  - Freight Cost (USD)
+  - Line Item Insurance (USD)
+  - days to Process
+
+categorical_columns:
+  - PQ
+  - PO / SO
+  - ASN/DN
+  - Country
+  - Fulfill Via
+  - Vendor INCO Term
+  - Shipment Mode
+  - Sub Classification
+  - Manufacturing Site
+  - First Line Designation
+
+target_column: Line Item Value
+

@@ -8,4 +8,7 @@ DataIngestionConfig = namedtuple("DataIngestion", [
 
 DataPreTransformationConfig = namedtuple("DataPreTransformation", ["pre_transformed_file_dir"])
 
+DataValidationConfig = namedtuple("DataValidation", ["schema_file_path"])
+
+
 TrainingPipelineConfig = namedtuple("TrainingPipeline", ["artifact_dir"])

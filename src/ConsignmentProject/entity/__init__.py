@@ -1,3 +1,3 @@
-from ConsignmentProject.entity.config_entity import DataIngestionConfig, DataPreTransformationConfig, TrainingPipelineConfig
+from ConsignmentProject.entity.config_entity import DataIngestionConfig, DataPreTransformationConfig, TrainingPipelineConfig, DataValidationConfig
 
-from ConsignmentProject.entity.artifact_entity import DataIngestionArtifact, DataPreTransformationArtifact
+from ConsignmentProject.entity.artifact_entity import DataIngestionArtifact, DataPreTransformationArtifact, DataValidationArtifact

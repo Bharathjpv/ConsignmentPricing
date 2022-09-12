@@ -25,6 +25,7 @@ class DataPreTransformation:
         df = df.drop('Brand', axis= 1)
         df = df.drop('Dosage Form', axis= 1)
         df = df.drop('Weight (Kilograms)', axis= 1)
+        
 
         def two_level(x):
             if x == 'Pre-PQ Process':
@@ -77,6 +78,7 @@ class DataPreTransformation:
 
         df['Scheduled Delivery Date'] = df['Scheduled Delivery Date'].apply(Scheduled_date)
         df['Delivered to Client Date'] = df['Delivered to Client Date'].apply(Scheduled_date)
+        df['Delivery Recorded Date'] = df['Delivery Recorded Date'].apply(Scheduled_date)
 
         df['Sub Classification'] = df['Sub Classification'].replace('HIV test - Ancillary', 'HIV test')
 
@@ -97,6 +99,28 @@ class DataPreTransformation:
                 return x
 
         df['Freight Cost (USD)'] = df['Freight Cost (USD)'].apply(other_cate)
+
+        df.rename(columns=
+            {
+            'PQ #': "PQ",
+            'PO / SO #': "PO / SO",
+            'ASN/DN #': "ASN/DN"
+            },
+            inplace = True
+        )
+        df['days to Process'] = df['Delivery Recorded Date'] - df['PQ First Sent to Client Date']
+
+        def to_int(x):
+            x = np.timedelta64(x, 'ns')
+            days = x.astype('timedelta64[D]')
+            x = days / np.timedelta64(1, 'D')
+            return x
+
+        df['days to Process'] = df['days to Process'].apply(to_int)
+
+        df = df.drop(['PQ First Sent to Client Date',
+       'PO Sent to Vendor Date', 'Scheduled Delivery Date',
+       'Delivered to Client Date', 'Delivery Recorded Date', 'Product Group'], axis=1)
 
         return df
 
