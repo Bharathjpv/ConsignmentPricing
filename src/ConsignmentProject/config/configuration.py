@@ -1,7 +1,9 @@
 from ConsignmentProject.constants import *
-from ConsignmentProject.entity import DataIngestionConfig, DataCleaningConfig, DataValidationConfig, TrainingPipelineConfig
+from ConsignmentProject.entity import DataIngestionConfig, DataCleaningConfig, DataValidationConfig,DataTransforamtionConfig, TrainingPipelineConfig
 from ConsignmentProject.utils import read_yaml, create_directories
 from ConsignmentProject import logger
+
+
 import os
 
 class ConfigurationManager:
@@ -19,7 +21,6 @@ class ConfigurationManager:
         
         raw_data_dir = os.path.join(artifact_dir, config.raw_data_dir)
 
-        
         data_ingestion_config = DataIngestionConfig(
             dataset_download_url=config.dataset_download_url,
             raw_data_dir=raw_data_dir
@@ -40,14 +41,10 @@ class ConfigurationManager:
         return data_cleaning_config
     
     def get_data_validation_config(self) -> DataValidationConfig:
-        config = self.config.data_validation_config
+        
         artifact_dir = self.training_pipeline_config.artifact_dir
 
-        data_validation_artifact_dir = os.path.join(
-            artifact_dir,
-            config.schema_dir
-        )
-
+        
         schema_file_path = SCHEMA_FILE_PATH
 
         data_validation_config = DataValidationConfig(
@@ -55,6 +52,27 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+    
+    def get_data_tranformation_config(self) -> DataTransforamtionConfig:
+        config = self.config.data_transformation_config
+        artifact_dir = self.training_pipeline_config.artifact_dir
+
+        data_transformation_artifact_dir = os.path.join(artifact_dir, config.transformed_dir)
+
+        transformed_train_dir = os.path.join(artifact_dir,config.transformed_dir, config.transformed_train_dir)
+
+        transformed_test_dir = os.path.join(artifact_dir, config.transformed_dir, config.transformed_test_dir)
+
+        preprocessed_object_file_path = os.path.join(artifact_dir, config.transformed_dir, config.preprocession_dir, config.preprocessed_object_file_name)
+
+        data_transformation_config = DataTransforamtionConfig(
+        transformed_train_dir= transformed_train_dir,
+        transformed_test_dir= transformed_test_dir,
+        preprocessed_object_file_path= preprocessed_object_file_path
+        )
+
+        return data_transformation_config
+
 
     def get_training_pipeline_config(self) -> TrainingPipelineConfig:
         config = self.config.training_pipeline_config

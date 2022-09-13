@@ -12,7 +12,7 @@ class DataCleaning:
         self.data_ingestion_artifact = data_ingestion_artifact
         self.data_cleaning_config = data_cleaning_config
 
-    def transformData(self) -> DataCleaningArtifact:
+    def cleanData(self):
         
         df = pd.read_csv(self.data_ingestion_artifact.data_file_path)
 
@@ -126,7 +126,7 @@ class DataCleaning:
 
 
     def save_cleaned_data(self):
-        data = self.transformData()
+        data = self.cleanData()
 
         cleaned_file_path = self.data_cleaning_config.cleaned_file_dir
 
@@ -138,7 +138,7 @@ class DataCleaning:
 
         return cleaned_data_path
 
-    def initiate_data_cleaning(self):
+    def initiate_data_cleaning(self) -> DataCleaningArtifact:
 
         data_cleaning_artifact = DataCleaningArtifact(
             cleaned_data_file_path=self.save_cleaned_data()

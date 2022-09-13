@@ -21,7 +21,6 @@ columns:
 numerical_columns:
   - Unit of Measure (Per Pack)
   - Line Item Quantity
-  - Line Item Value
   - Pack Price
   - Unit Price
   - Freight Cost (USD)

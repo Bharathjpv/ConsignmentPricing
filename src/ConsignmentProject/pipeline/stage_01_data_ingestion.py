@@ -1,5 +1,9 @@
-from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning
+from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation
 from ConsignmentProject.config import ConfigurationManager
+
+import warnings
+warnings.filterwarnings("ignore")
+
 
 
 def main():
@@ -15,7 +19,6 @@ def main():
     data_cleaning = DataCleaning(dataIngestionArtifact, data_cleaning_config)
 
     dataCleaningArtifact = data_cleaning.initiate_data_cleaning()
-
     ##################################################
 
     data_validation_config = configMain.get_data_validation_config()
@@ -23,7 +26,15 @@ def main():
     dataValidation = DataValidation(data_validation_config=data_validation_config, data_cleaned_artifact = dataCleaningArtifact)
 
     datavalidationartifact = dataValidation.initiate_data_validation()
-    print(datavalidationartifact)
+    #################################################################
+
+    data_validation_config = configMain.get_data_tranformation_config()
+    data_transformation_config = configMain.get_data_tranformation_config()
+
+    dataTransformation = DataTransformation(data_transformationc_config=data_transformation_config, data_validation_artifact=datavalidationartifact,
+    data_cleaning_artifact= dataCleaningArtifact)
+
+    dataTransformationArtifact = dataTransformation.initiate_data_transformation()
     
 
 if __name__=="__main__":

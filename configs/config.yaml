@@ -8,7 +8,11 @@ data_ingestion_config:
 data_cleaning_config:
   cleaned_file_dir: data_cleaning
 
-data_validation_config:
-  schema_dir: configs
-  schema_file_name: schema.yaml
 
+
+data_transformation_config:
+  transformed_dir : data_transformation
+  transformed_train_dir: train
+  transformed_test_dir: test
+  preprocession_dir: preprocessed
+  preprocessed_object_file_name: preprocessed.pkl

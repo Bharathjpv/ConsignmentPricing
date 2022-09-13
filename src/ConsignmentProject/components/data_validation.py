@@ -1,5 +1,6 @@
 from ConsignmentProject.entity import DataValidationConfig, DataValidationArtifact, DataCleaningArtifact
 from ConsignmentProject.utils import read_yaml
+from ConsignmentProject.constants import *
 
 
 import pandas as pd
@@ -13,7 +14,7 @@ class DataValidation:
         self.data_cleaned_artifact = data_cleaned_artifact
 
     def get_df(self):
-        df = pd.read_csv(self.data_cleaned_artifact.cleaned_data_file_path)
+        df = pd.read_csv(r'D:\Consignment\ConsignmentPricing\artifacts\data_cleaning\cleaned_consignment_data.csv')
 
         return df
 
@@ -35,7 +36,7 @@ class DataValidation:
         validation_sataus = False
         df = self.get_df()
 
-        schema_path = self.data_validation_config.schema_file_path
+        schema_path = SCHEMA_FILE_PATH
         schema_info = read_yaml(schema_path)
 
         columns = schema_info.columns.keys()
@@ -48,7 +49,7 @@ class DataValidation:
 
     def initiate_data_validation(self):
 
-        schema_file_path = self.data_validation_config.schema_file_path
+        schema_file_path = SCHEMA_FILE_PATH
 
         data_vaidation_artifact=DataValidationArtifact(schema_file_path=schema_file_path,
         is_validated = self.validate_dataset_schema(),
