@@ -1,4 +1,4 @@
-from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation
+from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation, ModelTrainer
 from ConsignmentProject.config import ConfigurationManager
 
 import warnings
@@ -35,10 +35,11 @@ def main():
     data_cleaning_artifact= dataCleaningArtifact)
 
     dataTransformationArtifact = dataTransformation.initiate_data_transformation()
-    
 
-if __name__=="__main__":
-    try:
-        main()
-    except Exception as e:
-        raise e
+    ###################################################################################
+
+    model_trainer_config = configMain.get_model_trainer_config()
+
+    modelTraniner = ModelTrainer(model_trainer_config=model_trainer_config, data_transformation_artifact= dataTransformationArtifact)
+
+    modelTrainerArtifact = modelTraniner.initaite_model_tranier()

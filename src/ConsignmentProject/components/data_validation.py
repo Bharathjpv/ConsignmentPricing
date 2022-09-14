@@ -14,7 +14,7 @@ class DataValidation:
         self.data_cleaned_artifact = data_cleaned_artifact
 
     def get_df(self):
-        df = pd.read_csv(r'D:\Consignment\ConsignmentPricing\artifacts\data_cleaning\cleaned_consignment_data.csv')
+        df = pd.read_csv(self.data_cleaned_artifact.cleaned_data_file_path)
 
         return df
 

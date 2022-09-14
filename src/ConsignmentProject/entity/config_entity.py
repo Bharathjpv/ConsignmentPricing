@@ -12,5 +12,7 @@ DataValidationConfig = namedtuple("DataValidation", ["schema_file_path"])
 
 DataTransforamtionConfig = namedtuple("DataTransformation", ["transformed_train_dir", "transformed_test_dir", "preprocessed_object_file_path"])
 
+ModelTrainerConfig = namedtuple("ModelTrainerConfig", ["model_file_name", "trained_model_file_path","base_accuracy", "model_config_file_path"])
+
 
 TrainingPipelineConfig = namedtuple("TrainingPipeline", ["artifact_dir"])
