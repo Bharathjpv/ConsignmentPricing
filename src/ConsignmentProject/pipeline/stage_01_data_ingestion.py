@@ -1,4 +1,4 @@
-from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation, ModelTrainer
+from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation, ModelTrainer, ModelEvaluation
 from ConsignmentProject.config import ConfigurationManager
 
 import warnings
@@ -43,3 +43,12 @@ def main():
     modelTraniner = ModelTrainer(model_trainer_config=model_trainer_config, data_transformation_artifact= dataTransformationArtifact)
 
     modelTrainerArtifact = modelTraniner.initaite_model_tranier()
+
+
+    ################################################################
+
+    model_evaluation_config = configMain.get_model_evaluation_config()
+
+    modelEvaluator = ModelEvaluation(model_evaluation_config= model_evaluation_config,data_cleaning_artifact= dataCleaningArtifact, model_trainer_artifact= modelTrainerArtifact)
+
+    modelEvaluationArtifact = modelEvaluator.initiate_model_evaluation()

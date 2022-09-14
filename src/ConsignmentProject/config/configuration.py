@@ -1,5 +1,5 @@
 from ConsignmentProject.constants import *
-from ConsignmentProject.entity import DataIngestionConfig, ModelTrainerConfig,DataCleaningConfig, DataValidationConfig,DataTransforamtionConfig,  TrainingPipelineConfig
+from ConsignmentProject.entity import DataIngestionConfig, ModelTrainerConfig,DataCleaningConfig, DataValidationConfig,DataTransforamtionConfig,ModelEvaluationConfig,TrainingPipelineConfig
 from ConsignmentProject.utils import read_yaml, create_directories
 from ConsignmentProject import logger
 
@@ -86,7 +86,7 @@ class ConfigurationManager:
         model_file_name = os.path.join(trained_model_file_path, config.model_file_name)
         
 
-        
+
         model_config_file_path = MODEL_FILE_PATH
 
         base_accuracy = config.base_accuracy
@@ -99,7 +99,21 @@ class ConfigurationManager:
         )
 
         return model_trainer_config
+    
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
 
+        config = self.config.model_evaluation_config
+
+        artifact_dir = self.training_pipeline_config.artifact_dir
+
+        model_evaluation_dir = os.path.join(artifact_dir, config.model_evaluation_dir)
+
+        model_evaluation_file_path = os.path.join(model_evaluation_dir, config.model_evaluation_file_name)
+
+        model_evaluation_config = ModelEvaluationConfig(model_evaluation_file_path= model_evaluation_file_path
+        )
+
+        return model_evaluation_config
 
     def get_training_pipeline_config(self) -> TrainingPipelineConfig:
         config = self.config.training_pipeline_config
