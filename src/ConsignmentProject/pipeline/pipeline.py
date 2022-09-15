@@ -1,12 +1,17 @@
 from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation, ModelTrainer, ModelEvaluation, ModelPusher
 from ConsignmentProject.config import ConfigurationManager
+from collections import namedtuple
+
+PipelineArtifact=namedtuple("Pipeline", [
+    "data_ingestion_artifact",
+    "data_cleaning_artifact"
+])
 
 import warnings
 warnings.filterwarnings("ignore")
 
 
-
-def main():
+def pipeline():
     configMain = ConfigurationManager()
 
     ingestion_config = configMain.get_data_ingestion_config()
@@ -60,3 +65,5 @@ def main():
     modelPusher = ModelPusher(model_pusher_config=model_pusher_config, model_evaluation_artifact= modelEvaluationArtifact)
 
     modelPusherArtifact = modelPusher.initiate_model_pusher()
+
+    return PipelineArtifact(data_ingestion_artifact=dataIngestionArtifact._asdict(),data_cleaning_artifact=dataCleaningArtifact._asdict())

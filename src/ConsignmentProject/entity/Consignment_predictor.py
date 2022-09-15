@@ -2,7 +2,7 @@ import os
 import sys
 
 from ConsignmentProject.exception import ConsignmentException
-
+from ConsignmentProject.utils import load_object
 import pandas as pd
 
 
@@ -46,7 +46,6 @@ class ConsignmentData:
             self.FreightCost =FreightCost,
             self.LineItemInsurance=LineItemInsurance ,
             self.daystoProcess =daystoProcess,
-            self.LineItemValue=LineItemValue
         except Exception as e:
             raise ConsignmentException(e, sys) from e
 
@@ -54,7 +53,8 @@ class ConsignmentData:
 
         try:
             consignment_input_dict = self.get_housing_data_as_dict()
-            return pd.DataFrame(housing_input_dict)
+            print(pd.DataFrame(consignment_input_dict))
+            return pd.DataFrame(consignment_input_dict)
         except Exception as e:
             raise ConsignmentException(e, sys) from e
 
@@ -94,10 +94,10 @@ class ConsignmentPredictor:
 
     def get_latest_model_path(self):
         try:
-            folder_name = list(map(int, os.listdir(self.model_dir)))
-            latest_model_dir = os.path.join(self.model_dir, f"{max(folder_name)}")
-            file_name = os.listdir(latest_model_dir)[0]
-            latest_model_path = os.path.join(latest_model_dir, file_name)
+            # folder_name =  os.listdir(self.model_dir)
+            # latest_model_dir = folder_name[-1]
+            # file_name = os.listdir(latest_model_dir)[0]
+            latest_model_path = r'D:\Consignment\ConsignmentPricing\saved_models\2022-09-15-15-14-34\model.pkl'
             return latest_model_path
         except Exception as e:
             raise ConsignmentException(e, sys) from e
@@ -106,6 +106,7 @@ class ConsignmentPredictor:
         try:
             model_path = self.get_latest_model_path()
             model = load_object(file_path=model_path)
+            print(X)
             median_house_value = model.predict(X)
             return median_house_value
         except Exception as e:

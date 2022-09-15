@@ -96,6 +96,7 @@ def evaluate_regression_model(model_list: list, X_train:np.ndarray, y_train:np.n
                                                         test_accuracy=test_acc,
                                                         model_accuracy=model_accuracy,
                                                         index_number=index_number)
+                print(metric_info_artifact)
 
                 # logging.info(f"Acceptable model found {metric_info_artifact}. ")
             index_number += 1

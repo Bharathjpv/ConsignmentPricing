@@ -1,28 +1,70 @@
-import streamlit as st
-import pickle
-import time
+from typing import Union
+
+from fastapi import FastAPI
+from ConsignmentProject.pipeline.pipeline import pipeline
+from pydantic import BaseModel
+from ConsignmentProject.entity.Consignment_predictor import ConsignmentData, ConsignmentPredictor
+
+from fastapi import Body
+from typing import Dict, Any
+
 import pandas as pd
-import sys
-import datetime
-from ConsignmentProject.logger import logging
-from ConsignmentProject.exception import ConsignmentException
 
-from ConsignmentProject.entity import Consignment_predictor, ConsignmentData
-from ConsignmentProject.pipeline.pipeline import main
+app = FastAPI()
+
+class Data(BaseModel):
+    PQ: str
+    PO: str
+    DN: str
+    Country: str
+    Fulfill: str
+    Vendor: str
+    Shipment: str
+    Classification: str
+    Manufacturing: str
+    Designation: str
+    PerPack: float
+    LineItemQuantity: float
+    PackPrice: float
+    UnitPrice: float
+    FreightCost: float
+    LineItemInsurance: float
+    daystoProcess: float
 
 
-# model = pickle.load(open('classificationmodel.pkl', 'rb'))
-# countrylist = pickle.load(open('countryname.pkl', 'rb'))
-# logging = logger.applevel_logger()
+@app.get("/train")
+async def read_root():
+    response = pipeline()
+    return response._asdict()
 
 
-@st.cache(persist=True)
-def main():
-    st.sidebar.header("Predict consignemnt Pricing Using Machine Learning")
-    st.sidebar.text("Choose the parmeters to predict")
+@app.post("/predict")
+async def read_item(data: Dict[Any, Any]):
+    PQ = data['PQ']
+    PO = data['PO']
+    DN = data['DN']
+    Country = data['Country']
+    Fulfill=data["Fulfill"]
+    Vendor=data["Vendor"]
+    Shipment=data["Shipment"]
+    Classification=data["Classification"]
+    Manufacturing=data["Manufacturing"]
+    Designation=data["Designation"]
+    PerPack=data["PerPack"]
+    LineItemQuantity=data["LineItemQuantity"]
+    PackPrice=data["PackPrice"]
+    UnitPrice=data["UnitPrice"]
+    FreightCost=data["FreightCost"]
+    LineItemInsurance=data["LineItemInsurance"]
+    daystoProcess=data["daystoProcess"]
 
-    st.sidebar.markdown("#### PQ")
-    pq = 
+    dataClass = ConsignmentData(PQ, PO, DN, Country, Fulfill, Vendor, Shipment, Classification, Manufacturing, Designation, PerPack, LineItemQuantity, PackPrice, UnitPrice, FreightCost, LineItemInsurance, daystoProcess)
+    df = dataClass.get_housing_input_data_frame()
+    df = pd.read_csv(r'D:\Consignment\ConsignmentPricing\artifacts\2022-09-15-13-09-23\data_cleaning\cleaned_consignment_data.csv')
+    df = df.iloc[:1]
 
-if __name__ == '__main__':
-    main()
+    predictorClass = ConsignmentPredictor(model_dir=r"D:\Consignment\ConsignmentPricing\saved_models\2022-09-15-13-09-23")
+    
+    result = predictorClass.predict(df)
+    print(result)
+    return data
