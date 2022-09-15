@@ -6,4 +6,5 @@ PyYAML
 python-box
 ensure
 dill
+streamlit
 -e .

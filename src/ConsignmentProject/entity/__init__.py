@@ -3,3 +3,5 @@ from ConsignmentProject.entity.config_entity import DataIngestionConfig, DataCle
 from ConsignmentProject.entity.artifact_entity import DataIngestionArtifact, DataCleaningArtifact, DataValidationArtifact, DataTransforamtionArtifact, ModelTrainerArtifact, ModelEvaluationArtifact, ModelPusherArtifact
 
 from ConsignmentProject.entity.model_factory import evaluate_regression_model, evaluate_classification_model
+
+from ConsignmentProject.entity.Consignment_predictor import ConsignmentData, ConsignmentPredictor
