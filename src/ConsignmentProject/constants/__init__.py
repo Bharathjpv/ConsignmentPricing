@@ -1,9 +1,9 @@
 from pathlib import Path
 import os
-
+from datetime import datetime
 ROOT = os.getcwd()
 
-
+TIMESTAMP=f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}"
 CONFIG_FILE_PATH = Path("configs/config.yaml")
 
 SCHEMA_FILE_PATH = Path("configs/schema.yaml")

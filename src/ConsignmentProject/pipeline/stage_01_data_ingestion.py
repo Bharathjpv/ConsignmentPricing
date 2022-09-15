@@ -1,4 +1,4 @@
-from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation, ModelTrainer, ModelEvaluation
+from ConsignmentProject.components import DataIngestion, DataValidation, DataCleaning, DataTransformation, ModelTrainer, ModelEvaluation, ModelPusher
 from ConsignmentProject.config import ConfigurationManager
 
 import warnings
@@ -52,3 +52,11 @@ def main():
     modelEvaluator = ModelEvaluation(model_evaluation_config= model_evaluation_config,data_cleaning_artifact= dataCleaningArtifact, model_trainer_artifact= modelTrainerArtifact)
 
     modelEvaluationArtifact = modelEvaluator.initiate_model_evaluation()
+
+    ################################################################
+
+    model_pusher_config = configMain.get_model_pusher_config()
+
+    modelPusher = ModelPusher(model_pusher_config=model_pusher_config, model_evaluation_artifact= modelEvaluationArtifact)
+
+    modelPusherArtifact = modelPusher.initiate_model_pusher()

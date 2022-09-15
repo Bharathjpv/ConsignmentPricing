@@ -1,5 +1,5 @@
 from ConsignmentProject.constants import *
-from ConsignmentProject.entity import DataIngestionConfig, ModelTrainerConfig,DataCleaningConfig, DataValidationConfig,DataTransforamtionConfig,ModelEvaluationConfig,TrainingPipelineConfig
+from ConsignmentProject.entity import DataIngestionConfig, ModelTrainerConfig,DataCleaningConfig, DataValidationConfig,DataTransforamtionConfig,ModelEvaluationConfig, ModelPusherConfig, TrainingPipelineConfig
 from ConsignmentProject.utils import read_yaml, create_directories
 from ConsignmentProject import logger
 
@@ -9,9 +9,10 @@ import os
 class ConfigurationManager:
     def __init__(
         self, 
-        config_filepath=CONFIG_FILE_PATH):
+        config_filepath=CONFIG_FILE_PATH,time_stamp=TIMESTAMP):
 
         self.config = read_yaml(path_to_yaml=config_filepath)
+        self.timestamp=time_stamp
         self.training_pipeline_config = self.get_training_pipeline_config()
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
@@ -114,10 +115,20 @@ class ConfigurationManager:
         )
 
         return model_evaluation_config
+    
+    def get_model_pusher_config(self) -> ModelPusherConfig:
+
+        # time_stamp = f"{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        model_pusher_config_info = self.config.model_pusher_config
+        export_dir_path = os.path.join(ROOT, model_pusher_config_info.model_export_dir,self.timestamp)
+
+        model_pusher_config = ModelPusherConfig(export_dir_path=export_dir_path)
+        # logging.info(f"Model pusher config {model_pusher_config}")
+        return model_pusher_config
 
     def get_training_pipeline_config(self) -> TrainingPipelineConfig:
         config = self.config.training_pipeline_config
-        artifact_dir = os.path.join(ROOT, config.artifact_dir)
+        artifact_dir = os.path.join(ROOT, config.artifact_dir,self.timestamp)
 
         training_pipeline_config = TrainingPipelineConfig(
             artifact_dir = artifact_dir

@@ -1,4 +1,4 @@
-from ConsignmentProject.entity import ModelEvaluationConfig, DataCleaningArtifact, ModelTrainerArtifact, ModelEvaluationArtifact
+from ConsignmentProject.entity import ModelEvaluationConfig, DataCleaningArtifact, ModelTrainerArtifact, ModelEvaluationArtifact, evaluate_regression_model
 from ConsignmentProject.constants import *
 from ConsignmentProject.utils import read_yaml_file,read_yaml, load_data, load_object, write_yaml_file
 

@@ -4,3 +4,4 @@ from ConsignmentProject.components.data_validation import DataValidation
 from ConsignmentProject.components.data_transformation import DataTransformation
 from ConsignmentProject.components.model_trainer import ModelTrainer
 from ConsignmentProject.components.model_evaluation import ModelEvaluation
+from ConsignmentProject.components.model_pusher import ModelPusher

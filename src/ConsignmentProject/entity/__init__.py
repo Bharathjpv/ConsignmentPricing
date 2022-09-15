@@ -1,3 +1,5 @@
-from ConsignmentProject.entity.config_entity import DataIngestionConfig, DataCleaningConfig, TrainingPipelineConfig, DataValidationConfig, DataTransforamtionConfig, ModelTrainerConfig, ModelEvaluationConfig
+from ConsignmentProject.entity.config_entity import DataIngestionConfig, DataCleaningConfig, TrainingPipelineConfig, DataValidationConfig, DataTransforamtionConfig, ModelTrainerConfig, ModelEvaluationConfig, ModelPusherConfig
 
-from ConsignmentProject.entity.artifact_entity import DataIngestionArtifact, DataCleaningArtifact, DataValidationArtifact, DataTransforamtionArtifact, ModelTrainerArtifact, ModelEvaluationArtifact
+from ConsignmentProject.entity.artifact_entity import DataIngestionArtifact, DataCleaningArtifact, DataValidationArtifact, DataTransforamtionArtifact, ModelTrainerArtifact, ModelEvaluationArtifact, ModelPusherArtifact
+
+from ConsignmentProject.entity.model_factory import evaluate_regression_model, evaluate_classification_model
